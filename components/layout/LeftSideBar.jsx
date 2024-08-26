@@ -10,18 +10,22 @@ import Loader from "./Loader";
 
 export default function LeftSideBar() {
   const { user, isLoaded } = useUser();
+
   const [loading, setLoading] = useState(true);
+
   const [userData, setUserData] = useState({});
+
   const getUser = async () => {
     const response = await fetch(`/api/user/${user.id}`);
     const data = await response.json();
     setUserData(data);
     setLoading(false);
-    console.log(data);
   };
 
   useEffect(() => {
-    getUser();
+    if (user) {
+      getUser();
+    }
   }, [user]);
 
   return loading || !isLoaded ? (
